@@ -11,8 +11,9 @@
 # pow(2, 5) # => 32
 # pow(3, 4) # => 81
 # pow(4, 3) # => 64
-def pow(base, exponent)
-
+def pow(base, exponent) 
+    return 1 if exponent == 0
+    base * pow(base, exponent - 1)
 end
 
 
@@ -35,7 +36,12 @@ end
 # lucas_number(5)   # =>    11
 # lucas_number(9)   # =>    76
 def lucas_number(n)
-
+    if n == 0
+        return 2
+    elsif n == 1
+        return 1
+    end
+    lucas_number(n - 1) + lucas_number(n - 2) 
 end
 
 
@@ -51,7 +57,10 @@ end
 # sum_array([5, 2])         # => 7
 # sum_array([4, 10, -1, 2]) # => 15
 def sum_array(array)
-
+    if array.length == 0
+        return 0
+    end
+    array.shift + sum_array(array)
 end
 
 
@@ -67,7 +76,10 @@ end
 # reverse_string("internet")    # => "tenretni"
 # reverse_string("friends")     # => "sdneirf"
 def reverse_string(str)
-
+    if str.length == 0
+        return ""
+    end
+    str[-1] + reverse_string(str.chop)
 end
 
 
@@ -100,5 +112,20 @@ end
 #     2-dimensional array: [['some data']]
 #     3-dimensional array: [[['some data']]]
 def flatten(data)
-
+    result = []
+    if !data.kind_of?(Array)
+        return [data]
+    end
+    data.each do |ele|
+        if ele.kind_of?(Array)
+            result += flatten(ele)
+        else
+            result << ele
+        end
+    end
+    result
 end
+
+array_1 = [1,2, [3,4]]
+# array_1 = [1, 2, [[3, 4], [5, [6]]], [7, 8]]
+flatten(array_1) 
